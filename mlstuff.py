@@ -46,3 +46,14 @@ def plot_results(trainY, testY, train_predict, test_predict):
     plt.title('Actual and Predicted Values. The Red Line Separates The Training And Test Examples')
     return fig, line1, line2
 
+def write_to_csv(trainY, testY, train_predict, test_predict):
+    data = np.append(trainY, testY)
+    predicted = np.append(train_predict, test_predict)
+    rows = len(data)
+    
+    with open("./out.csv", "w") as f:
+        for i in range(rows):
+            f.write(f"{i},{data[i]},{predicted[i]}\n")
+
+
+

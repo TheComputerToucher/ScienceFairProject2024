@@ -10,7 +10,7 @@ rnn = make_rnn(3, 1, (time_steps, 1), activation=['tanh', 'tanh'])
 
 train_data, test_data, data = get_data(DATA_FILE)
 
-train_model_on_data(rnn, train_data, time_steps, epochs=420)
+train_model_on_data(rnn, train_data, time_steps, epochs=100)
 
 print("Model successfully trained on CSV file ", DATA_FILE)
 
@@ -23,6 +23,7 @@ train_prediction = rnn.predict(trainX)
 test_prediction = rnn.predict(testX)
 
 print_error(trainY, testY, train_prediction, test_prediction)
+write_to_csv(trainY, testY, train_prediction, test_prediction)
 
 # print(rnn.predict(np.reshape(np.array([1,2,3]),(1, 3, 1))))
 

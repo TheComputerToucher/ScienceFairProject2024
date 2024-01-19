@@ -27,4 +27,3 @@ def get_data(url: str, split_percent = 0.8):
 
     return train_data, test_data, scaled_data
 
-
