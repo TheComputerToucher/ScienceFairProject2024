@@ -162,8 +162,9 @@ cython_debug/
 # No Visual Studio stuff
 .vs/
 
-# No output
+# No output on GitHub
 out*
 config.json
+*.keras
 
 
