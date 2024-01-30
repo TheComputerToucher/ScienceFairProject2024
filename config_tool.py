@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# A barebones configuration utillity that allows you to modify the CSV path and the Epoch count
+""" This module is a config utillity that allows you to modify the CSV path and the Epoch count"""
 import json
 
 DEFAULT_DATA = '{\n\t"epochs": 400,\n\t"data_path": "./data.csv"}\n'
@@ -7,16 +7,14 @@ DEFAULT_DATA = '{\n\t"epochs": 400,\n\t"data_path": "./data.csv"}\n'
 config = json.loads(DEFAULT_DATA)
 
 try:
-    with open("config.json", "r") as f:
+    with open("config.json", "r", encoding="utf-8") as f:
         config = json.load(f)
 except FileNotFoundError:
     print("config.json not found")
 except json.decoder.JSONDecodeError:
     print("Invalid config.json, using default data")
-except Exception as e:
-    print(f"Encountered unknown error: {e}")
 
-active = True
+ACTIVE = True
 
 print("This is the configuration tool for my Science Fair Project")
 print("""Please enter your command below, the commands are:
@@ -27,22 +25,21 @@ print("""Please enter your command below, the commands are:
       - exitnosav: exits without saving
       - help: prints this message""")
 
-while active:
+while ACTIVE:
     cmd = input("> ")
     match cmd:
         case "exit":
-            active = False
+            ACTIVE = False
             print("Goodbye")
         case "exitnosav":
             confirm = input("Are you sure? Enter y for yes and anything else for no. > ")
             if confirm == "y":
-                active = False
+                ACTIVE = False
                 print("Goodbye")
             else:
                 print("Not exiting")
         case "epoch":
             new_count = input("Enter the new epoch count> ")
-            new_count_num = 0
             try:
                 new_count_num = int(new_count)
                 config["epochs"] = new_count_num
@@ -51,9 +48,7 @@ while active:
         case "save":
             data = json.dumps(config)
 
-            with open("config.json", "w") as f:
+            with open("config.json", "w", encoding="utf-8") as f:
                 f.write(data)
         case default:
             print(f"Invalid command: {cmd}")
-
-
