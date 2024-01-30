@@ -2,24 +2,26 @@
 # A barebones configuration utillity that allows you to modify the CSV path and the Epoch count
 import json
 
-config = None
+DEFAULT_DATA = '{\n\t"epochs": 400,\n\t"data_path": "./data.csv"}\n'
 
-default_data = '{\n\t"epochs": 400,\n\t"data_path": "./data.csv"}'
+config = json.loads(DEFAULT_DATA)
 
 try:
     with open("config.json", "r") as f:
         config = json.load(f)
+except FileNotFoundError:
+    print("config.json not found")
+except json.decoder.JSONDecodeError:
+    print("Invalid config.json, using default data")
 except Exception as e:
-    print(f"Encountered error: {e}")
-    config = json.loads(default_data)
-        
-        
+    print(f"Encountered unknown error: {e}")
+
 active = True
 
 print("This is the configuration tool for my Science Fair Project")
-print("Please enter your command below, the commands are:")
-print("""- epoch: allows you to update the epoch count
-      -  path: allows you to update the path to the data csv file
+print("""Please enter your command below, the commands are:
+      - epoch: allows you to update the epoch count
+      - path: allows you to update the path to the data csv file
       - save: saves your changes
       - exit: exits and saves
       - exitnosav: exits without saving
@@ -48,7 +50,7 @@ while active:
                 print("That's not a number, try again")
         case "save":
             data = json.dumps(config)
-            
+
             with open("config.json", "w") as f:
                 f.write(data)
         case default:
